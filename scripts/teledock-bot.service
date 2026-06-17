@@ -1,0 +1,17 @@
+[Unit]
+Description=TeleDock Telegram Bot (aiogram)
+After=network.target
+
+[Service]
+Type=simple
+User=teledock
+Group=teledock
+WorkingDirectory=/opt/teledock/backend
+Environment=PYTHONPATH=/opt/teledock/backend
+EnvironmentFile=/opt/teledock/backend/.env
+ExecStart=/opt/teledock/backend/venv/bin/python3 -m src.bot.main
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

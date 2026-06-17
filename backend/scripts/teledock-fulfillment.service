@@ -1,0 +1,29 @@
+[Unit]
+Description=TeleDock Fulfillment Worker — Automated Digital Delivery
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/teledock/backend
+Environment=PYTHONPATH=/opt/teledock/backend
+Environment=PYTHONUNBUFFERED=1
+
+# Use the venv Python interpreter
+ExecStart=/opt/teledock/backend/venv/bin/python /opt/teledock/backend/scripts/run_fulfillment_worker.py
+
+Restart=always
+RestartSec=10
+
+# Security hardening
+NoNewPrivileges=false
+ProtectSystem=false
+ProtectHome=false
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=teledock-fulfillment
+
+[Install]
+WantedBy=multi-user.target

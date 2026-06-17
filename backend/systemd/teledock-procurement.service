@@ -1,0 +1,19 @@
+[Unit]
+Description=Teledock Automated Procurement Worker (The Refiller)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/teledock/backend
+Environment="PYTHONPATH=/opt/teledock/backend"
+Environment="PURCHASE_LOG_PATH=/opt/teledock/backend/purchasing.log"
+EnvironmentFile=/opt/teledock/backend/.env
+ExecStart=/opt/teledock/backend/venv/bin/python /opt/teledock/backend/scripts/run_procurement_worker.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
